@@ -39,20 +39,27 @@ php artisan key:generate
 
 If your MySQL root password is not empty, open `.env` and set `DB_PASSWORD=your_password`.
 
-#### Import the full database (recommended — gets all real data)
+#### Option A — No MySQL installed? Run the setup script (easiest)
+
+Double-click `setup_database.bat` inside the `Backend` folder, or run it in CMD:
+
+```
+setup_database.bat
+```
+
+This switches the app to SQLite (no MySQL needed), runs all migrations, and seeds the data automatically.
+
+#### Option B — Have MySQL installed? Import the full database
 
 ```bash
+# Windows (CMD) — from the Backend folder:
+"C:\Program Files\MySQL\MySQL Server 8.4\bin\mysql.exe" -u root -p < database\full_dump.sql
+
+# Mac / Linux:
 mysql -u root -p < database/full_dump.sql
 ```
 
-This creates the `learn_x_change` database and loads all tables, users, courses, enrollments, payments, and everything else.
-
-> **Alternative (empty database + seed only):**
-> ```bash
-> # In MySQL: CREATE DATABASE learn_x_change;
-> php artisan migrate
-> php artisan db:seed
-> ```
+This loads all real data: users, courses, enrollments, payments, and everything else.
 
 Start the backend server:
 
