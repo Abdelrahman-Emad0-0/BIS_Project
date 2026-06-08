@@ -27,32 +27,29 @@ cd Backend
 # Install PHP dependencies
 composer install
 
-# Copy and configure environment
+# Copy environment file
 cp .env.example .env
 
 # Generate app key
 php artisan key:generate
 ```
 
-Open `.env` and make sure the database settings match your local MySQL:
+If your MySQL root password is not empty, open `.env` and set `DB_PASSWORD=your_password`.
 
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=learn_x_change
-DB_USERNAME=root
-DB_PASSWORD=
-```
-
-Create the database in MySQL, then run migrations and seed:
+#### Import the full database (recommended — gets all real data)
 
 ```bash
-# In MySQL: CREATE DATABASE learn_x_change;
-
-php artisan migrate
-php artisan db:seed
+mysql -u root -p < database/full_dump.sql
 ```
+
+This creates the `learn_x_change` database and loads all tables, users, courses, enrollments, payments, and everything else.
+
+> **Alternative (empty database + seed only):**
+> ```bash
+> # In MySQL: CREATE DATABASE learn_x_change;
+> php artisan migrate
+> php artisan db:seed
+> ```
 
 Start the backend server:
 
@@ -71,9 +68,9 @@ cd ../Frontend
 # Install JS dependencies
 npm install
 
-# Copy and configure environment
+# Copy environment file
 cp .env.example .env.local
-# .env.local already points to http://localhost:8000/api — no changes needed for local dev
+# Already points to http://localhost:8000/api — no changes needed for local dev
 ```
 
 Start the frontend dev server:
@@ -85,11 +82,13 @@ npm run dev
 
 ---
 
-## Seed accounts
+## Test accounts
 
-After running `php artisan db:seed`:
+All passwords are `password123`
 
 | Role    | Email                          | Password    |
 |---------|-------------------------------|-------------|
 | Teacher | teacher@learnxchange.com      | password123 |
 | Admin   | admin@learnxchange.com        | password123 |
+| Learner | ahmedheyia@gmail.com          | password123 |
+| Both    | exchange@learnxchange.com     | password123 |
