@@ -82,6 +82,49 @@ npm run dev
 
 ---
 
+## Running on two separate machines
+
+If one person runs the backend and another runs the frontend on different laptops:
+
+**Both must be on the same WiFi network.**
+
+### Backend machine
+
+1. Find your local IP (Windows: `ipconfig`, Mac/Linux: `ifconfig`) — e.g. `192.168.1.42`
+2. In `Backend/.env`, set `FRONTEND_URL` to the frontend machine's IP:
+   ```
+   FRONTEND_URL=http://192.168.1.XX:3000
+   ```
+3. Start Laravel bound to all interfaces:
+   ```bash
+   php artisan serve --host=0.0.0.0 --port=8000
+   ```
+
+### Frontend machine
+
+1. In `Frontend/.env.local`, point to the backend machine's IP:
+   ```
+   NEXT_PUBLIC_API_URL=http://192.168.1.42:8000/api
+   ```
+2. Start normally:
+   ```bash
+   npm run dev
+   ```
+
+### Different networks (different homes)?
+
+The backend person needs [ngrok](https://ngrok.com):
+```bash
+ngrok http 8000
+# Gets a public URL like https://abc123.ngrok.io
+```
+Then the frontend person sets:
+```
+NEXT_PUBLIC_API_URL=https://abc123.ngrok.io/api
+```
+
+---
+
 ## Test accounts
 
 All passwords are `password123`
