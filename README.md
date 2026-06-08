@@ -28,7 +28,10 @@ cd Backend
 composer install
 
 # Copy environment file
-cp .env.example .env
+# Windows (Command Prompt):
+copy .env.example .env
+# Mac / Linux:
+# cp .env.example .env
 
 # Generate app key
 php artisan key:generate
@@ -69,7 +72,10 @@ cd ../Frontend
 npm install
 
 # Copy environment file
-cp .env.example .env.local
+# Windows (Command Prompt):
+copy .env.example .env.local
+# Mac / Linux:
+# cp .env.example .env.local
 # Already points to http://localhost:8000/api — no changes needed for local dev
 ```
 
