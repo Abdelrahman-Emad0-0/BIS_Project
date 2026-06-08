@@ -25,17 +25,8 @@ powershell -Command "(Get-Content .env) -replace '^DB_PASSWORD', '#DB_PASSWORD' 
 echo Creating SQLite database file...
 type nul > database\database.sqlite
 
-echo Running migrations...
-php artisan migrate --force
-if %errorlevel% neq 0 (
-    echo.
-    echo ERROR: Migration failed. Make sure PHP is installed and composer install was run.
-    pause
-    exit /b 1
-)
-
-echo Running seeders...
-php artisan db:seed --force
+echo Running migrations and seeding all data...
+php artisan migrate:fresh --seed --force
 if %errorlevel% neq 0 (
     echo.
     echo ERROR: Seeding failed.
